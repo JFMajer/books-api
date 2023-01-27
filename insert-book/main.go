@@ -26,11 +26,9 @@ type Book struct {
 
 func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	var book Book
-	// print request body
-	log.Println(request.Body)
 	// Unmarshal the request body into a Book struct
 	err := json.Unmarshal([]byte(request.Body), &book)
-	log.Println(book)
+
 	if err != nil {
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
@@ -67,10 +65,7 @@ func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Headers: map[string]string{
-			"Content-Type": "application/json",
-		},
-		Body: "Book added",
+		Body:       "Book added",
 	}, nil
 
 }
