@@ -8,14 +8,14 @@ Globals:
     Timeout: 30
     Environment:
       Variables:
-        BOOKS_TABLE: !Ref BooksTable
+        TABLE_NAME: !Ref BooksTable
 
 Resources:
   GetAllBooksFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: get-all-books/
-      Handler: books-api
+      CodeUri: ./get-all-books/
+      Handler: main
       Events:
         GetAllBooks:
           Type: Api
@@ -38,14 +38,21 @@ Resources:
           AttributeType: S
         - AttributeName: author
           AttributeType: S
-        - AttributeName: isbn
-          AttributeType: S
-        - AttributeName: year
-          AttributeType: N
-        - AttributeName: description
-          AttributeType: S
       KeySchema:
         - AttributeName: title
           KeyType: HASH
         - AttributeName: author
           KeyType: RANGE
+
+
+Outputs:
+  GetAllBooksFunction:
+    Description: "API Gateway endpoint URL for Prod stage for Books API"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
+    Export:
+      Name: BooksApi
+  BooksTable:
+    Description: "Books DynamoDB table name"
+    Value: !Ref BooksTable
+    Export:
+      Name: BooksTable

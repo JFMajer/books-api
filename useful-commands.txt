@@ -8,3 +8,6 @@ aws lambda list-functions --profile sso --region us-east-1 --query 'Functions[*]
 aws lambda get-function-configuration --profile sso --region us-east-1 --function-name my-function
 
 aws lambda delete-function --profile sso --region us-east-1 --function-name my-function
+
+sam build
+sam deploy --guided
