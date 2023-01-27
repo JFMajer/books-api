@@ -11,3 +11,4 @@ aws lambda delete-function --profile sso --region us-east-1 --function-name my-f
 
 sam build
 sam deploy --guided
+sam delete --stack-name NAME

@@ -25,6 +25,21 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref BooksTable
+  
+  InsertBookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./insert-book/
+      Handler: main
+      Events:
+        InsertBook:
+          Type: Api
+          Properties:
+            Path: /books
+            Method: post
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref BooksTable
 
   BooksTable:
     Type: AWS::DynamoDB::Table
