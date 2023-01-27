@@ -41,6 +41,21 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: !Ref BooksTable
 
+  SearchBookByTitleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./get-book-title/
+      Handler: main
+      Events:
+        SearchBookByTitle:
+          Type: Api
+          Properties:
+            Path: /books/{title}
+            Method: get
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref BooksTable
+
   BooksTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -54,9 +69,9 @@ Resources:
         - AttributeName: author
           AttributeType: S
       KeySchema:
-        - AttributeName: title
-          KeyType: HASH
         - AttributeName: author
+          KeyType: HASH
+        - AttributeName: title
           KeyType: RANGE
 
 
