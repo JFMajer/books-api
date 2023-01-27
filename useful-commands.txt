@@ -1,0 +1,10 @@
+# to issue commands without storing access keys in the shared credentials file
+aws configure sso
+
+aws lambda list-functions --profile sso
+
+aws lambda list-functions --profile sso --region us-east-1 --query 'Functions[*].FunctionName'
+
+aws lambda get-function-configuration --profile sso --region us-east-1 --function-name my-function
+
+aws lambda delete-function --profile sso --region us-east-1 --function-name my-function
