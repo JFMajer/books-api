@@ -20,6 +20,7 @@ type Book struct {
 	Author      string `json:"author"`
 	ISBN        string `json:"isbn"`
 	Description string `json:"description"`
+	Year        int    `json:"year"`
 }
 
 func getAllBooks() (events.APIGatewayProxyResponse, error) {
