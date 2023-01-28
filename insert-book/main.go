@@ -30,22 +30,20 @@ func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	err := json.Unmarshal([]byte(request.Body), &book)
 
 	if err != nil {
+		log.Printf("Failed to unmarshal book, here is why: %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
-			Body:       "invalid request body",
-		}, nil
-	}
-
-	if err != nil {
-		return events.APIGatewayProxyResponse{
-			StatusCode: http.StatusInternalServerError,
-			Body:       "failed to marshal book",
+			Body:       "Failed to marshal book",
 		}, nil
 	}
 
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("eu-north-1"))
 	if err != nil {
-		log.Fatalf("failed to load configuration, %v", err)
+		log.Fatalf("Failed to load configuration, here is why: %v", err)
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "Failed to load configuration",
+		}, nil
 	}
 
 	client := dynamodb.NewFromConfig(cfg)
@@ -60,7 +58,11 @@ func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 		},
 	})
 	if err != nil {
-		log.Fatalf("failed to put item, %v", err)
+		log.Fatalf("Failed to put item, here is why: %v", err)
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "Failed to put item",
+		}, nil
 	}
 
 	return events.APIGatewayProxyResponse{
