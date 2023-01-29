@@ -17,6 +17,7 @@ jobs:
         with:
           working-directory: ./insert-book
   build-and-deploy:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
