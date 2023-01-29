@@ -4,8 +4,8 @@ on:
       - main
 
 jobs:
-  lint:
-    name: lint
+  lint-get-all-books:
+    name: get-all-books-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v3
@@ -16,9 +16,22 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: latest
-          args: --config ./.github/golangci.yml ./... ./insert-book ./get-all-books ./get-books-by-author
+          working-directory: ./get-all-books
+  lint-get-books-by-author:
+    name: get-books-by-author-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - uses: actions/checkout@v3
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          working-directory: ./get-book-by-author
   build-and-deploy:
-    needs: lint
+    needs: [lint-get-all-books, lint-get-books-by-author]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
