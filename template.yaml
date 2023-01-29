@@ -88,8 +88,8 @@ Resources:
 
 Outputs:
   GetAllBooksFunction:
-    Description: "API Gateway endpoint URL for Prod stage for Books API"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
+    Description: "API Gateway endpoint URL for Books API"
+    Value: !Sub "https://${ServerlessApi}.execute-api.${AWS::Region}.amazonaws.com/dev/books"
     Export:
       Name: BooksApi
   BooksTable:
