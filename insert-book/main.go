@@ -47,7 +47,7 @@ func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 	}
 
 	client := dynamodb.NewFromConfig(cfg)
-	resp, err := client.PutItem(context.TODO(), &dynamodb.PutItemInput{
+	_, err = client.PutItem(context.TODO(), &dynamodb.PutItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Item: map[string]types.AttributeValue{
 			"isbn":        &types.AttributeValueMemberS{Value: book.ISBN},
@@ -65,17 +65,10 @@ func insertBook(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRe
 		}, nil
 	}
 
-	// Marshal the response into a JSON string
-	returnBody, err := json.Marshal(resp)
-	if err != nil {
-		log.Printf("Failed to marshal response, here is why: %v", err)
-	}
-
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
-		Body:       string(returnBody),
+		Body:       "Successfully inserted book",
 	}, nil
-
 }
 
 func main() {
