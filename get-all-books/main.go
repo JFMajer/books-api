@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -25,6 +26,8 @@ type Book struct {
 }
 
 func getAllBooks(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Println("Request: ", request)
+	fmt.Println("Request headers: ", request.Headers)
 	numOfItems, err := strconv.Atoi(request.Headers["numOfItems"])
 	if err != nil {
 		log.Printf("Failed to grab numbers of items to return from request headers, %v", err)
