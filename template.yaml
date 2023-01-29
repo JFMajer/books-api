@@ -11,15 +11,22 @@ Globals:
         TABLE_NAME: !Ref BooksTable
 
 Resources:
+  ServerlessApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+
   GetAllBooksFunction:
     Type: AWS::Serverless::Function
     Properties:
+      AutoPublishAlias: live
       CodeUri: ./get-all-books/
       Handler: main
       Events:
         GetAllBooks:
           Type: Api
           Properties:
+            RestApiId: !Ref ServerlessApi
             Path: /books
             Method: get
       Policies:
@@ -29,12 +36,14 @@ Resources:
   InsertBookFunction:
     Type: AWS::Serverless::Function
     Properties:
+      AutoPublishAlias: live
       CodeUri: ./insert-book/
       Handler: main
       Events:
         InsertBook:
           Type: Api
           Properties:
+            RestApiId: !Ref ServerlessApi
             Path: /books
             Method: post
       Policies:
@@ -44,12 +53,14 @@ Resources:
   SearchBookByAuthorFunction:
     Type: AWS::Serverless::Function
     Properties:
+      AutoPublishAlias: live
       CodeUri: ./get-book-by-author/
       Handler: main
       Events:
         SearchBookByTitle:
           Type: Api
           Properties:
+            RestApiId: !Ref ServerlessApi
             Path: /books/{author}
             Method: get
       Policies:
