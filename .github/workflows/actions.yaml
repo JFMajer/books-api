@@ -2,11 +2,21 @@ on:
   push:
     branches:
       - main
+      - 'feature/**' # ** indicites everything, * indicatesd everything other than /
+      - 'release/**'
   workflow_dispatch:
   pull_request:
     
 
 jobs:
+  show-debug-info:
+    name: show debug info
+    runs-on: ubuntu-latest
+    steps:
+      - name: list env variables
+        run: printenv
+      - name: print github context
+        run: echo "${{ toJSON(github) }}"
   lint-get-all-books:
     name: get-all-books-check
     runs-on: ubuntu-latest
