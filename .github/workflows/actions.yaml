@@ -1,13 +1,11 @@
+# trigger this workflow on push to main branch but not when changes are made inside frontend folder
 on:
   push:
     branches:
       - main
-      - 'feature/**' # ** indicites everything, * indicatesd everything other than /
-      - 'release/**'
     paths-ignore:
       - 'frontend/**'
   workflow_dispatch:
-  pull_request:
     
 
 jobs:
