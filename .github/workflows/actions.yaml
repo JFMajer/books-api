@@ -60,6 +60,7 @@ jobs:
           working-directory: insert-book
           skip-cache: true
   build-and-deploy:
+    environment: dev
     needs: [lint-get-all-books, lint-get-books-by-author, lint-insert-book]
     runs-on: ubuntu-latest
     steps:
@@ -71,6 +72,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
       - run: sam build
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name books --s3-bucket ${{ secrets.S3_BUCKET }} --region ${{ env.AWS_REGION }} --capabilities CAPABILITY_IAM
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name books --region ${{ vars.AWS_REGION }} --capabilities CAPABILITY_IAM
 
 

@@ -25,12 +25,17 @@ type Book struct {
 }
 
 func getAllBooks(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	// if numofitems is not provided in the request headers, default to 5
+	if request.Headers["numofitems"] == "" {
+		request.Headers["numofitems"] = "5"
+	}
+	// if numofitems is provided, check if it is a valid integer
 	numOfItems, err := strconv.Atoi(request.Headers["numofitems"])
 	if err != nil {
-		log.Printf("Failed to grab numbers of items to return from request headers, %v", err)
+		log.Printf("Failed to convert numofitems to integer, %v", err)
 		return events.APIGatewayProxyResponse{
 			StatusCode: http.StatusBadRequest,
-			Body:       "Failed to grab numbers of items to return from request headers",
+			Body:       "Failed to convert numofitems to integer",
 		}, err
 	}
 
