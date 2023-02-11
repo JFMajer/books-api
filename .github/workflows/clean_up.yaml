@@ -5,6 +5,7 @@ on:
 
 jobs:
   clean_up:
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
