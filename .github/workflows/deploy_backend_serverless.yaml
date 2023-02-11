@@ -1,4 +1,4 @@
-# trigger this workflow on push to main branch but not when changes are made inside frontend folder
+# trigger this workflow on push to main branch but not when changes are made inside frontend folder (it will have separate workflow)
 on:
   push:
     branches:
